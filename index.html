@@ -85,13 +85,25 @@
         ipValue.textContent = targetIP;
 
         var sequence = [
-            { text: '> Scanning network: ' + targetIP, cls: 'info', delay: 150 },
-            { text: '> Port 4444 open - exploiting vulnerability', cls: 'info', delay: 200 },
-            { text: '> [OK] Root access obtained', cls: 'success', delay: 250 },
-            { text: '> Extracting credentials from /etc/shadow', cls: 'info', delay: 200 },
-            { text: '> [OK] Data exfiltrated successfully', cls: 'success', delay: 250 },
-            { text: '> Disabling firewall and security logs', cls: 'info', delay: 200 },
-            { text: '> [OK] All traces wiped', cls: 'success', delay: 300 }
+            { text: '> Initializing exploit framework v4.2.1...', cls: 'info', delay: 120 },
+            { text: '> Target: ' + targetIP + ' — probing open ports...', cls: 'info', delay: 200 },
+            { text: '> [SCAN] 22/tcp open  ssh     OpenSSH 8.2', cls: 'info', delay: 150 },
+            { text: '> [SCAN] 80/tcp open  http    Apache 2.4.41', cls: 'info', delay: 120 },
+            { text: '> [SCAN] 443/tcp open https   nginx 1.18.0', cls: 'info', delay: 120 },
+            { text: '> [SCAN] 4444/tcp open shell   — VULNERABLE', cls: 'info', delay: 180 },
+            { text: '> CVE-2024-1337 detected — remote code execution', cls: 'info', delay: 250 },
+            { text: '> Deploying payload... [============================] 100%', cls: 'info', delay: 300 },
+            { text: '> [OK] Shell established — uid=0(root) gid=0(root)', cls: 'success', delay: 280 },
+            { text: '> Enumerating file system...', cls: 'info', delay: 180 },
+            { text: '> [OK] /etc/shadow extracted — 14 password hashes', cls: 'success', delay: 220 },
+            { text: '> [OK] /root/.ssh/id_rsa copied', cls: 'success', delay: 180 },
+            { text: '> [OK] Browser credentials dumped — 23 entries', cls: 'success', delay: 220 },
+            { text: '> Installing persistence backdoor...', cls: 'info', delay: 200 },
+            { text: '> [OK] Cron job injected — /etc/cron.d/sysupdate', cls: 'success', delay: 220 },
+            { text: '> Disabling firewall: ufw disable', cls: 'info', delay: 180 },
+            { text: '> [OK] Firewall disabled', cls: 'success', delay: 150 },
+            { text: '> Wiping logs: > /var/log/auth.log /var/log/syslog', cls: 'info', delay: 200 },
+            { text: '> [OK] All traces cleared — operation complete', cls: 'success', delay: 300 }
         ];
 
         var idx = 0;
