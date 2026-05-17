@@ -1,85 +1,41 @@
-# 🔒 Hacked Terminal Wallpaper
+# 🔒 Security Awareness: Hacked Terminal & QR Code Risks
 
-A realistic terminal-style "hacked" wallpaper with authentic penetration testing command sequences. Perfect for desktop backgrounds, screensavers, or cybersecurity presentations.
+> **This project is a security awareness tool.** It demonstrates how convincing fake "hacked" interfaces look, and how QR codes can be weaponised to deliver them — without the target suspecting anything. Use it to educate, train, and protect.
 
 ## 🎯 Live Demo
 
-- **Main Terminal**: [View Live](https://michealswolski.github.io/hacked-terminal-wallpaper/)
-- **QR Code Generator**: [Get QR Code](https://michealswolski.github.io/hacked-terminal-wallpaper/qr.html)
-
-## ✨ Features
-
-- 🖥️ **Realistic Terminal Output**: Authentic hacking sequence with real penetration testing commands
-- 📱 **Fully Responsive**: Works perfectly on desktop, tablet, and mobile
-- 🎨 **Clean Design**: Modern styled interface with smooth animations
-- ⚡ **Fast Loading**: Lightweight HTML/CSS/JavaScript - no dependencies
-- 🔗 **QR Code Integration**: Built-in QR code generator for easy sharing
-- 🎭 **Convincing Title**: Browser tab shows "System Diagnostics - Remote Admin Console"
-
-## 🚀 Quick Start
-
-### View Online
-Simply visit the live demo link above or scan the QR code from the QR page.
-
-### Use as Wallpaper
-1. Open the main terminal page
-2. Press F11 for fullscreen (or your browser's fullscreen mode)
-3. Take a screenshot or save the page
-4. Set as your desktop wallpaper
-
-### Share with Others
-1. Visit the QR code page
-2. Download the QR code image
-3. Share the QR code - scanning it will open the terminal
-
-## 📂 Files
-
-- `index.html` - Main hacked terminal wallpaper
-- `qr.html` - QR code generator page
-- `README.md` - This file
-
-## 🛠️ Technical Details
-
-**Built with:**
-- Pure HTML5
-- CSS3 with responsive design
-- Vanilla JavaScript (no frameworks)
-- QRCode.js library for QR generation
-
-**Features:**
-- Responsive breakpoints for mobile, tablet, and desktop
-- Smooth CSS animations
-- Dynamic IP generation
-- Realistic command sequences
-- Professional color scheme
-
-## 📱 Mobile Support
-
-The terminal is fully optimized for mobile devices with:
-- Adjusted font sizes for readability
-- Responsive layout that stacks on small screens
-- Touch-friendly interactions
-- No horizontal scrolling
-
-## 🎨 Customization
-
-Want to customize? Simply edit:
-- Terminal commands in `index.html` (lines with `sequence` array)
-- Colors by changing the CSS variables
-- Timing by adjusting the `delay` values
-
-## 📄 License
-
-Free to use for personal and educational purposes. Created by Micheal Wolski.
-
-## 🤝 Contributing
-
-Feel free to fork this project and submit pull requests with improvements!
-
-## ⚠️ Disclaimer
-
-This is a visual demonstration only - no actual hacking occurs. Created for entertainment and educational purposes.
+- **Terminal Demo**: [View Live](https://michealswolski.github.io/hacked-terminal-wallpaper/)
+- **QR Code Page**: [Get QR Code](https://michealswolski.github.io/hacked-terminal-wallpaper/qr.html)
 
 ---
 
-Made with 💻 by Micheal Wolski | Cybersecurity Enthusiast
+## 🎓 Purpose: Security Awareness Training
+
+This project was built specifically to support **security awareness education**. It serves as a hands-on demonstration of two related social engineering threats:
+
+1. **Fake system compromise screens** — realistic-looking terminal output that can panic or manipulate a target into taking harmful actions (calling a fake support line, entering credentials, paying a ransom).
+2. **QR code phishing ("quishing")** — using innocent-looking QR codes to silently deliver malicious URLs, bypassing traditional link-scanning habits entirely.
+
+By seeing how convincing these attacks look in practice, users, teams, and organisations are far better prepared to recognise and resist them in the real world.
+
+---
+
+## ⚠️ The Real Danger of QR Codes
+
+QR codes have become a trusted part of everyday life — restaurant menus, parking meters, event check-ins, package tracking. That trust is exactly what attackers exploit.
+
+### What is QR Code Phishing ("Quishing")?
+
+Quishing is a phishing attack delivered via QR code instead of a traditional hyperlink. Because most people cannot read a QR code with their eyes, they have no idea where it leads before they scan it. Attackers exploit this blindness by:
+
+- **Replacing legitimate QR codes** on posters, parking machines, restaurant tables, or package labels with malicious versions — either physically reprinted or overlaid with a sticker.
+- **Embedding QR codes in phishing emails** as image attachments, bypassing email security filters that scan text-based links but typically ignore images.
+- **Sharing QR codes through social media or messaging apps**, where they appear harmless and generate no URL preview warnings.
+- **Placing QR codes in public spaces** (airports, cafés, conference venues) under pretexts like "Free Wi-Fi — scan to connect" or "Scan here for your receipt."
+
+### What Can Happen When You Scan a Malicious QR Code?
+
+Once scanned, a malicious QR code can:
+
+- **Redirect you to a phishing page** that mimics a trusted login screen (Microsoft 365, Gmail, a banking app) and silently harvests your credentials.
+- **Trigger an automatic dow
