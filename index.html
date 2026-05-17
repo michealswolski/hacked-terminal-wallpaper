@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>System Diagnostics - Remote Admin Console</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            font-family: 'Source Code Pro', 'Courier New', monospace;
+            color: #e8e8e8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .terminal {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .line {
+            font-size: 15px;
+            line-height: 1.8;
+            margin: 10px 0;
+            padding-left: 10px;
+        }
+
+        .info {
+            color: #58a6ff;
+        }
+
+        .success {
+            color: #3fb950;
+        }
+
+        .hack-box {
+            width: 100%;
+            max-width: 700px;
+            background: #0d1117;
+            border: 2px solid #f85149;
+            border-radius: 6px;
+            padding: 25px;
+            box-shadow: 0 0 30px rgba(248, 81, 73, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hack-box.show {
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .box-header {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #f85149;
+            margin-bottom: 25px;
+            letter-spacing: 0.08em;
+            text-shadow: 0 0 10px rgba(248, 81, 73, 0.5);
+        }
+
+        .box-content {
+            display: grid;
+            gap: 12px;
+        }
+
+        .box-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
+            border-left: 3px solid #f85149;
+        }
+
+        .box-label {
+            font-size: 13px;
+            color: #8b949e;
+            font-weight: 500;
+        }
+
+        .box-value {
+            font-size: 14px;
+            color: #f85149;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .box-footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(248, 81, 73, 0.3);
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #f85149;
+            letter-spacing: 0.1em;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            .line {
+                font-size: 14px;
+                line-height: 1.7;
+                margin: 8px 0;
+            }
+
+            .hack-box {
+                padding: 20px 15px;
+                max-width: 100%;
+            }
+
+            .box-header {
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+
+            .box-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                padding: 10px;
+            }
+
+            .box-label {
+                font-size: 12px;
+            }
+
+            .box-value {
+                font-size: 13px;
+                text-align: left;
+                word-break: break-all;
+            }
+
+            .box-footer {
+                font-size: 16px;
+                margin-top: 15px;
+                padding-top: 15px;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 400px) {
+            .line {
+                font-size: 13px;
+            }
+
+            .box-header {
+                font-size: 20px;
+            }
+
+            .box-footer {
+                font-size: 15px;
+            }
+        }
+
+        /* Desktop enhancements */
+        @media (min-width: 1024px) {
+            .line {
+                font-size: 16px;
+            }
+
+            .box-header {
+                font-size: 32px;
+            }
+
+            .box-label {
+                font-size: 14px;
+            }
+
+            .box-value {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="terminal" id="terminal"></div>
+        <div class="hack-box" id="hackBox">
+            <div class="box-header">YOU'VE BEEN HACKED</div>
+            <div class="box-content">
+                <div class="box-row">
+                    <span class="box-label">System Compromised</span>
+                    <span class="box-value" id="ipValue"></span>
+                </div>
+                <div class="box-row">
+                    <span class="box-label">Access Level</span>
+                    <span class="box-value">ROOT</span>
+                </div>
+                <div class="box-row">
+                    <span class="box-label">Persistence</span>
+                    <span class="box-value">ESTABLISHED</span>
+                </div>
+                <div class="box-row">
+                    <span class="box-label">Data Exfiltrated</span>
+                    <span class="box-value">/etc/shadow, /root/.ssh/</span>
+                </div>
+                <div class="box-row">
+                    <span class="box-label">Firewall Status</span>
+                    <span class="box-value">DISABLED</span>
+                </div>
+                <div class="box-row">
+                    <span class="box-label">Security Logs</span>
+                    <span class="box-value">WIPED</span>
+                </div>
+            </div>
+            <div class="box-footer">ALL SYSTEMS COMPROMISED</div>
+        </div>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const hackBox = document.getElementById('hackBox');
+        const ipValue = document.getElementById('ipValue');
+
+        function rand(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function ip() {
+            return `${rand(10,192)}.${rand(0,255)}.${rand(0,255)}.${rand(1,254)}`;
+        }
+
+        const targetIP = ip();
+        ipValue.textContent = targetIP;
+
+        const sequence = [
+            { text: `> Scanning network: ${targetIP}`, class: 'info', delay: 150 },
+            { text: `> Port 4444 open - exploiting vulnerability`, class: 'info', delay: 200 },
+            { text: `> [OK] Root access obtained`, class: 'success', delay: 250 },
+            { text: `> Extracting credentials from /etc/shadow`, class: 'info', delay: 200 },
+            { text: `> [OK] Data exfiltrated successfully`, class: 'success', delay: 250 },
+            { text: `> Disabling firewall and security logs`, class: 'info', delay: 200 },
+            { text: `> [OK] All traces wiped`, class: 'success', delay: 300 },
+        ];
+
+        let currentIndex = 0;
+
+        function addLine(text, className) {
+            const line = document.createElement('div');
+            line.className = 'line ' + className;
+            line.textContent = text;
+            terminal.appendChild(line);
+        }
+
+        function typeSequence() {
+            if (currentIndex >= sequence.length) {
+                setTimeout(() => {
+                    hackBox.classList.add('show');
+                }, 500);
+                return;
+            }
+
+            const item = sequence[currentIndex];
+            addLine(item.text, item.class);
+            currentIndex++;
+
+            setTimeout(typeSequence, item.delay);
+        }
+
+        setTimeout(typeSequence, 300);
+    </script>
+</body>
+</html>
