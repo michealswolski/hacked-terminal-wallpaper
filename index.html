@@ -127,84 +127,86 @@
             letter-spacing: 0.1em;
         }
 
+        /* Reveal panel */
+        .reveal-box {
+            width: 100%;
+            max-width: 700px;
+            background: #0d1117;
+            border: 2px solid #3fb950;
+            border-radius: 6px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(63, 185, 80, 0.3);
+            margin-top: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            display: none;
+        }
+
+        .reveal-box.show {
+            display: block;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .reveal-header {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: #3fb950;
+            margin-bottom: 18px;
+            letter-spacing: 0.05em;
+            text-shadow: 0 0 10px rgba(63, 185, 80, 0.5);
+        }
+
+        .reveal-text {
+            font-size: 14px;
+            color: #c9d1d9;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .reveal-tips {
+            margin-top: 18px;
+            border-top: 1px solid rgba(63, 185, 80, 0.3);
+            padding-top: 18px;
+        }
+
+        .tip {
+            font-size: 13px;
+            color: #8b949e;
+            margin: 8px 0;
+            padding-left: 10px;
+            border-left: 2px solid #3fb950;
+        }
+
+        .tip strong {
+            color: #3fb950;
+        }
+
         /* Mobile optimizations */
         @media (max-width: 768px) {
-            body {
-                padding: 15px 10px;
-            }
-
-            .line {
-                font-size: 14px;
-                line-height: 1.7;
-                margin: 8px 0;
-            }
-
-            .hack-box {
-                padding: 20px 15px;
-                max-width: 100%;
-            }
-
-            .box-header {
-                font-size: 22px;
-                margin-bottom: 20px;
-            }
-
-            .box-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 6px;
-                padding: 10px;
-            }
-
-            .box-label {
-                font-size: 12px;
-            }
-
-            .box-value {
-                font-size: 13px;
-                text-align: left;
-                word-break: break-all;
-            }
-
-            .box-footer {
-                font-size: 16px;
-                margin-top: 15px;
-                padding-top: 15px;
-            }
+            body { padding: 15px 10px; }
+            .line { font-size: 14px; line-height: 1.7; margin: 8px 0; }
+            .hack-box, .reveal-box { padding: 20px 15px; max-width: 100%; }
+            .box-header { font-size: 22px; margin-bottom: 20px; }
+            .box-row { flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px; }
+            .box-label { font-size: 12px; }
+            .box-value { font-size: 13px; text-align: left; word-break: break-all; }
+            .box-footer { font-size: 16px; margin-top: 15px; padding-top: 15px; }
+            .reveal-header { font-size: 18px; }
+            .reveal-text, .tip { font-size: 13px; }
         }
 
-        /* Small phones */
         @media (max-width: 400px) {
-            .line {
-                font-size: 13px;
-            }
-
-            .box-header {
-                font-size: 20px;
-            }
-
-            .box-footer {
-                font-size: 15px;
-            }
+            .line { font-size: 13px; }
+            .box-header { font-size: 20px; }
+            .box-footer { font-size: 15px; }
         }
 
-        /* Desktop enhancements */
         @media (min-width: 1024px) {
-            .line {
-                font-size: 16px;
-            }
-
-            .box-header {
-                font-size: 32px;
-            }
-
-            .box-label {
-                font-size: 14px;
-            }
-
-            .box-value {
-                font-size: 15px;
-            }
+            .line { font-size: 16px; }
+            .box-header { font-size: 32px; }
+            .box-label { font-size: 14px; }
+            .box-value { font-size: 15px; }
         }
     </style>
 </head>
@@ -241,56 +243,16 @@
             </div>
             <div class="box-footer">ALL SYSTEMS COMPROMISED</div>
         </div>
-    </div>
 
-    <script>
-        const terminal = document.getElementById('terminal');
-        const hackBox = document.getElementById('hackBox');
-        const ipValue = document.getElementById('ipValue');
-
-        function rand(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-
-        function ip() {
-            return `${rand(10,192)}.${rand(0,255)}.${rand(0,255)}.${rand(1,254)}`;
-        }
-
-        const targetIP = ip();
-        ipValue.textContent = targetIP;
-
-        const sequence = [
-            { text: `> Scanning network: ${targetIP}`, class: 'info', delay: 150 },
-            { text: `> Port 4444 open - exploiting vulnerability`, class: 'info', delay: 200 },
-            { text: `> [OK] Root access obtained`, class: 'success', delay: 250 },
-            { text: `> Extracting credentials from /etc/shadow`, class: 'info', delay: 200 },
-            { text: `> [OK] Data exfiltrated successfully`, class: 'success', delay: 250 },
-            { text: `> Disabling firewall and security logs`, class: 'info', delay: 200 },
-            { text: `> [OK] All traces wiped`, class: 'success', delay: 300 },
-        ];
-
-        let currentIndex = 0;
-
-        function addLine(text, className) {
-            const line = document.createElement('div');
-            line.className = 'line ' + className;
-            line.textContent = text;
-            terminal.appendChild(line);
-        }
-
-        function typeSequence() {
-            if (currentIndex >= sequence.length) {
-                setTimeout(() => {
-                    hackBox.classList.add('show');
-                }, 500);
-                return;
-            }
-
-            const item = sequence[currentIndex];
-            addLine(item.text, item.class);
-            currentIndex++;
-
-            setTimeout(typeSequence, item.delay);
-        }
-
-       
+        <div class="reveal-box" id="revealBox">
+            <div class="reveal-header">⚠ SECURITY AWARENESS DEMO ⚠</div>
+            <p class="reveal-text">
+                You just scanned a random QR code — and landed on a fake "hacked" page. Nothing actually happened to your device. But in a real attack, it could have.
+            </p>
+            <p class="reveal-text">
+                This demo was created by <strong style="color:#58a6ff;">Micheal Wolski</strong>, a cybersecurity professional, to show how QR code phishing works in practice.
+            </p>
+            <div class="reveal-tips">
+                <div class="tip"><strong>Never scan</strong> QR codes from unknown sources — posters, emails, or random locations.</div>
+                <div class="tip"><strong>Check the URL</strong> before interacting with any page a QR code sends you to.</div>
+                <div class="tip"><strong>Real attacks</strong> use this exact method to steal credentials, install malware, or hijack sessi
