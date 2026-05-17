@@ -7,206 +7,41 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background:#0a0a0a; font-family:'Source Code Pro','Courier New',monospace; color:#e8e8e8; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:20px; overflow-x:hidden; }
+        .container { width:100%; max-width:900px; display:flex; flex-direction:column; align-items:center; }
+        .terminal { width:100%; text-align:left; margin-bottom:40px; }
+        .line { font-size:15px; line-height:1.8; margin:10px 0; padding-left:10px; }
+        .info { color:#58a6ff; }
+        .success { color:#3fb950; }
+        .hack-box { width:100%; max-width:700px; background:#0d1117; border:2px solid #f85149; border-radius:6px; padding:25px; box-shadow:0 0 30px rgba(248,81,73,0.3); opacity:0; transform:translateY(20px); }
+        .hack-box.show { animation:slideUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards; }
+        @keyframes slideUp { to { opacity:1; transform:translateY(0); } }
+        .box-header { text-align:center; font-size:28px; font-weight:700; color:#f85149; margin-bottom:25px; letter-spacing:0.08em; text-shadow:0 0 10px rgba(248,81,73,0.5); }
+        .box-content { display:grid; gap:12px; }
+        .box-row { display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:4px; border-left:3px solid #f85149; }
+        .box-label { font-size:13px; color:#8b949e; font-weight:500; }
+        .box-value { font-size:14px; color:#f85149; font-weight:700; text-align:right; }
+        .box-footer { margin-top:20px; padding-top:20px; border-top:1px solid rgba(248,81,73,0.3); text-align:center; font-size:20px; font-weight:700; color:#f85149; letter-spacing:0.1em; }
+        .reveal-box { width:100%; max-width:700px; background:#0d1117; border:2px solid #3fb950; border-radius:6px; padding:30px; box-shadow:0 0 30px rgba(63,185,80,0.3); margin-top:30px; opacity:0; transform:translateY(20px); display:none; }
+        .reveal-box.show { display:block; animation:slideUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards; }
+        .reveal-header { text-align:center; font-size:22px; font-weight:700; color:#3fb950; margin-bottom:18px; letter-spacing:0.05em; }
+        .reveal-text { font-size:14px; color:#c9d1d9; line-height:1.8; margin-bottom:12px; }
+        .reveal-tips { margin-top:18px; border-top:1px solid rgba(63,185,80,0.3); padding-top:18px; }
+        .tip { font-size:13px; color:#8b949e; margin:8px 0; padding-left:10px; border-left:2px solid #3fb950; }
+        .tip strong { color:#3fb950; }
+        @media (max-width:768px) {
+            body { padding:15px 10px; }
+            .line { font-size:14px; }
+            .hack-box,.reveal-box { padding:20px 15px; max-width:100%; }
+            .box-header { font-size:22px; }
+            .box-row { flex-direction:column; align-items:flex-start; gap:6px; padding:10px; }
+            .box-value { text-align:left; word-break:break-all; }
+            .box-footer { font-size:16px; }
         }
-
-        body {
-            background: #0a0a0a;
-            font-family: 'Source Code Pro', 'Courier New', monospace;
-            color: #e8e8e8;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .terminal {
-            width: 100%;
-            text-align: left;
-            margin-bottom: 40px;
-        }
-
-        .line {
-            font-size: 15px;
-            line-height: 1.8;
-            margin: 10px 0;
-            padding-left: 10px;
-        }
-
-        .info {
-            color: #58a6ff;
-        }
-
-        .success {
-            color: #3fb950;
-        }
-
-        .hack-box {
-            width: 100%;
-            max-width: 700px;
-            background: #0d1117;
-            border: 2px solid #f85149;
-            border-radius: 6px;
-            padding: 25px;
-            box-shadow: 0 0 30px rgba(248, 81, 73, 0.3);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .hack-box.show {
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .box-header {
-            text-align: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: #f85149;
-            margin-bottom: 25px;
-            letter-spacing: 0.08em;
-            text-shadow: 0 0 10px rgba(248, 81, 73, 0.5);
-        }
-
-        .box-content {
-            display: grid;
-            gap: 12px;
-        }
-
-        .box-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 4px;
-            border-left: 3px solid #f85149;
-        }
-
-        .box-label {
-            font-size: 13px;
-            color: #8b949e;
-            font-weight: 500;
-        }
-
-        .box-value {
-            font-size: 14px;
-            color: #f85149;
-            font-weight: 700;
-            text-align: right;
-        }
-
-        .box-footer {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(248, 81, 73, 0.3);
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-            color: #f85149;
-            letter-spacing: 0.1em;
-        }
-
-        /* Reveal panel */
-        .reveal-box {
-            width: 100%;
-            max-width: 700px;
-            background: #0d1117;
-            border: 2px solid #3fb950;
-            border-radius: 6px;
-            padding: 30px;
-            box-shadow: 0 0 30px rgba(63, 185, 80, 0.3);
-            margin-top: 30px;
-            opacity: 0;
-            transform: translateY(20px);
-            display: none;
-        }
-
-        .reveal-box.show {
-            display: block;
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .reveal-header {
-            text-align: center;
-            font-size: 22px;
-            font-weight: 700;
-            color: #3fb950;
-            margin-bottom: 18px;
-            letter-spacing: 0.05em;
-            text-shadow: 0 0 10px rgba(63, 185, 80, 0.5);
-        }
-
-        .reveal-text {
-            font-size: 14px;
-            color: #c9d1d9;
-            line-height: 1.8;
-            margin-bottom: 12px;
-        }
-
-        .reveal-tips {
-            margin-top: 18px;
-            border-top: 1px solid rgba(63, 185, 80, 0.3);
-            padding-top: 18px;
-        }
-
-        .tip {
-            font-size: 13px;
-            color: #8b949e;
-            margin: 8px 0;
-            padding-left: 10px;
-            border-left: 2px solid #3fb950;
-        }
-
-        .tip strong {
-            color: #3fb950;
-        }
-
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            body { padding: 15px 10px; }
-            .line { font-size: 14px; line-height: 1.7; margin: 8px 0; }
-            .hack-box, .reveal-box { padding: 20px 15px; max-width: 100%; }
-            .box-header { font-size: 22px; margin-bottom: 20px; }
-            .box-row { flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px; }
-            .box-label { font-size: 12px; }
-            .box-value { font-size: 13px; text-align: left; word-break: break-all; }
-            .box-footer { font-size: 16px; margin-top: 15px; padding-top: 15px; }
-            .reveal-header { font-size: 18px; }
-            .reveal-text, .tip { font-size: 13px; }
-        }
-
-        @media (max-width: 400px) {
-            .line { font-size: 13px; }
-            .box-header { font-size: 20px; }
-            .box-footer { font-size: 15px; }
-        }
-
-        @media (min-width: 1024px) {
-            .line { font-size: 16px; }
-            .box-header { font-size: 32px; }
-            .box-label { font-size: 14px; }
-            .box-value { font-size: 15px; }
+        @media (min-width:1024px) {
+            .line { font-size:16px; }
+            .box-header { font-size:32px; }
         }
     </style>
 </head>
@@ -216,43 +51,75 @@
         <div class="hack-box" id="hackBox">
             <div class="box-header">YOU'VE BEEN HACKED</div>
             <div class="box-content">
-                <div class="box-row">
-                    <span class="box-label">System Compromised</span>
-                    <span class="box-value" id="ipValue"></span>
-                </div>
-                <div class="box-row">
-                    <span class="box-label">Access Level</span>
-                    <span class="box-value">ROOT</span>
-                </div>
-                <div class="box-row">
-                    <span class="box-label">Persistence</span>
-                    <span class="box-value">ESTABLISHED</span>
-                </div>
-                <div class="box-row">
-                    <span class="box-label">Data Exfiltrated</span>
-                    <span class="box-value">/etc/shadow, /root/.ssh/</span>
-                </div>
-                <div class="box-row">
-                    <span class="box-label">Firewall Status</span>
-                    <span class="box-value">DISABLED</span>
-                </div>
-                <div class="box-row">
-                    <span class="box-label">Security Logs</span>
-                    <span class="box-value">WIPED</span>
-                </div>
+                <div class="box-row"><span class="box-label">System Compromised</span><span class="box-value" id="ipValue"></span></div>
+                <div class="box-row"><span class="box-label">Access Level</span><span class="box-value">ROOT</span></div>
+                <div class="box-row"><span class="box-label">Persistence</span><span class="box-value">ESTABLISHED</span></div>
+                <div class="box-row"><span class="box-label">Data Exfiltrated</span><span class="box-value">/etc/shadow, /root/.ssh/</span></div>
+                <div class="box-row"><span class="box-label">Firewall Status</span><span class="box-value">DISABLED</span></div>
+                <div class="box-row"><span class="box-label">Security Logs</span><span class="box-value">WIPED</span></div>
             </div>
             <div class="box-footer">ALL SYSTEMS COMPROMISED</div>
         </div>
-
         <div class="reveal-box" id="revealBox">
-            <div class="reveal-header">⚠ SECURITY AWARENESS DEMO ⚠</div>
-            <p class="reveal-text">
-                You just scanned a random QR code — and landed on a fake "hacked" page. Nothing actually happened to your device. But in a real attack, it could have.
-            </p>
-            <p class="reveal-text">
-                This demo was created by <strong style="color:#58a6ff;">Micheal Wolski</strong>, a cybersecurity professional, to show how QR code phishing works in practice.
-            </p>
+            <div class="reveal-header">SECURITY AWARENESS DEMO</div>
+            <p class="reveal-text">You just scanned a random QR code and landed on a fake "hacked" page. Nothing happened to your device. But in a real attack, it could have.</p>
+            <p class="reveal-text">This demo was created by <strong style="color:#58a6ff;">Micheal Wolski</strong>, a cybersecurity professional, to show how QR code phishing works.</p>
             <div class="reveal-tips">
-                <div class="tip"><strong>Never scan</strong> QR codes from unknown sources — posters, emails, or random locations.</div>
+                <div class="tip"><strong>Never scan</strong> QR codes from unknown sources — posters, emails, or public places.</div>
                 <div class="tip"><strong>Check the URL</strong> before interacting with any page a QR code sends you to.</div>
-                <div class="tip"><strong>Real attacks</strong> use this exact method to steal credentials, install malware, or hijack sessi
+                <div class="tip"><strong>Real attacks</strong> use this exact method to steal credentials and install malware.</div>
+                <div class="tip"><strong>Stay aware.</strong> If you did not put it there, do not scan it.</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var terminal = document.getElementById('terminal');
+        var hackBox = document.getElementById('hackBox');
+        var revealBox = document.getElementById('revealBox');
+        var ipValue = document.getElementById('ipValue');
+
+        function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+        function makeIP() { return rand(10,192)+'.'+rand(0,255)+'.'+rand(0,255)+'.'+rand(1,254); }
+
+        var targetIP = makeIP();
+        ipValue.textContent = targetIP;
+
+        var sequence = [
+            { text: '> Scanning network: ' + targetIP, cls: 'info', delay: 150 },
+            { text: '> Port 4444 open - exploiting vulnerability', cls: 'info', delay: 200 },
+            { text: '> [OK] Root access obtained', cls: 'success', delay: 250 },
+            { text: '> Extracting credentials from /etc/shadow', cls: 'info', delay: 200 },
+            { text: '> [OK] Data exfiltrated successfully', cls: 'success', delay: 250 },
+            { text: '> Disabling firewall and security logs', cls: 'info', delay: 200 },
+            { text: '> [OK] All traces wiped', cls: 'success', delay: 300 }
+        ];
+
+        var idx = 0;
+
+        function addLine(text, cls) {
+            var line = document.createElement('div');
+            line.className = 'line ' + cls;
+            line.textContent = text;
+            terminal.appendChild(line);
+        }
+
+        function next() {
+            if (idx >= sequence.length) {
+                setTimeout(function() {
+                    hackBox.classList.add('show');
+                    setTimeout(function() {
+                        revealBox.classList.add('show');
+                    }, 3500);
+                }, 500);
+                return;
+            }
+            var item = sequence[idx];
+            addLine(item.text, item.cls);
+            idx++;
+            setTimeout(next, item.delay);
+        }
+
+        next();
+    </script>
+</body>
+</html>
